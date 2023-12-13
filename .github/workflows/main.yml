@@ -1,0 +1,34 @@
+name: Surge Deploy
+
+on:
+  push:
+    branches:
+      - main # Change this to your main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install Surge
+      run: npm install -g surge
+
+    - name: Build and Deploy
+      run: |
+        # Add your build commands here (e.g., npm run build)
+        # Surge will deploy the contents of the 'build' directory
+
+        # Deploy to Surge
+        surge --project ./path/to/your/build/directory --domain your-domain.surge.sh
+
+      env:
+        SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
